@@ -1,11 +1,24 @@
+import { AppBackdrop } from '@/components/layout/AppBackdrop';
+import { AppFooter } from '@/components/layout/AppFooter';
 import type { LayoutProps } from '@/types/next';
 
+/**
+ * Giriş/kayıt ekranlarının iskeleti.
+ * İçerik viewport'un kalanında ortalanır, altlık ise akışın en altında durur —
+ * böylece form uzasa bile altlık içeriğin üstüne binmez.
+ */
 export default function AuthLayout({ children }: LayoutProps) {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 px-4 dark:bg-zinc-950">
-      <div className="w-full max-w-md rounded-xl border border-zinc-200 bg-white p-8 shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
-        {children}
+    <>
+      <AppBackdrop />
+      <div className="relative flex min-h-screen flex-col">
+        <div className="flex flex-1 items-center justify-center px-6 py-[86.7px]">
+          {children}
+        </div>
+        <div className="shrink-0 pb-[24px]">
+          <AppFooter />
+        </div>
       </div>
-    </div>
+    </>
   );
 }
