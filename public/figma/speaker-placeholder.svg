@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 400 400">
+  <!-- Konuşmacı fotoğrafı yer tutucusu. Renkler globals.css token'larından:
+       #5d873d = --lm-accent, #2d2d2d = --lm-bg-bottom, #1d1d1d = --lm-panel-bg,
+       #f8fcff = --lm-text. SVG olduğu için değerler sabit yazılmak zorunda. -->
+  <defs>
+    <linearGradient id="lmSpeakerPlaceholder" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#5d873d"/>
+      <stop offset="1" stop-color="#2d2d2d"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="400" fill="#1d1d1d"/>
+  <circle cx="200" cy="200" r="150" fill="url(#lmSpeakerPlaceholder)"/>
+  <g fill="#f8fcff" fill-opacity="0.55">
+    <circle cx="200" cy="156" r="54"/>
+    <path d="M200 218c-48.6 0-88 39.4-88 88 0 7.7 6.3 14 14 14h148c7.7 0 14-6.3 14-14 0-48.6-39.4-88-88-88z"/>
+  </g>
+</svg>

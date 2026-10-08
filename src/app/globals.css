@@ -1,26 +1,114 @@
 @import "tailwindcss";
 
+/* ==========================================================================
+   LMApp tasarım token'ları
+   Kaynak: Figma "LM App PC" dosyası (referans çerçeve 6400×3600 = 1920×1080 @3.3333x)
+   Figma koordinatları gerçek CSS px'e 0.3 katsayısıyla çevrildi.
+   Tasarım yalnızca koyu tema olduğu için tek tema tanımlıdır.
+   ========================================================================== */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Zemin */
+  --lm-bg-top: #000000;
+  --lm-bg-bottom: #2d2d2d;
+  --lm-veil: rgba(26, 25, 25, 0.2);
+
+  /* Metin */
+  --lm-text: #f8fcff;
+  --lm-text-muted: rgba(232, 246, 255, 0.7);
+  --lm-text-dim: #8e8e8e;
+  --lm-text-soft: #eeebe2;
+  --lm-accent: #5d873d;
+
+  /* Yüzeyler */
+  --lm-panel-bg: rgba(29, 29, 29, 0.6);
+  --lm-pill-bg: rgba(37, 37, 37, 0.6);
+  --lm-pill-border: #8e8e8e;
+  /* Hap etkileşim durumları: hover'da pasif hapun bir ton açılmış hali,
+     aktif hapta ise tasarımdaki hafif dolgu. */
+  --lm-pill-bg-hover: rgba(58, 58, 58, 0.75);
+  --lm-pill-bg-active: rgba(248, 252, 255, 0.1);
+  --lm-card-bg: rgba(26, 26, 26, 0.5);
+  --lm-card-border: rgba(255, 255, 255, 0.3);
+  /* Giriş/kayıt form alanlarının konturu (Figma 239:818) */
+  --lm-field-border: #e8f6ff;
+
+  /* Yüzen yüzeyler (menü, popover) — zemin desenli olduğu için opak olmalı */
+  --lm-popover-bg: #1a1919;
+  /* Yıkıcı eylemler — tasarımdaki kırmızı oturum bandıyla aynı ton */
+  --lm-danger: #ba5055;
+
+  /* Etiket (tag) renkleri */
+  --lm-tag-education: rgba(197, 31, 87, 0.5);
+  --lm-tag-program: rgba(154, 66, 194, 0.5);
+  --lm-tag-social: rgba(50, 176, 211, 0.5);
+  --lm-tag-project: rgba(222, 163, 10, 0.5);
+
+  /* Tipografi ölçeği — 1920px referans genişlikte Figma değerine oturur,
+     daralan ekranlarda vw ile küçülür, okunabilir bir alt sınırda durur. */
+  --fs-nav: clamp(13px, 1.203vw, 23.1px);
+  --fs-header-date: clamp(11px, 0.922vw, 17.7px);
+  --fs-header-welcome: clamp(13px, 1.135vw, 21.8px);
+  --fs-panel-date: clamp(11px, 0.781vw, 15px);
+  --fs-card-title: clamp(13px, 0.969vw, 18.6px);
+  --fs-card-time: clamp(9px, 0.547vw, 10.5px);
+  --fs-tag: clamp(10px, 0.781vw, 15px);
+  --fs-label: clamp(12px, 0.786vw, 15.1px);
+  --fs-helper: clamp(10px, 0.656vw, 12.6px);
+  --fs-footer: clamp(10px, 0.641vw, 12.3px);
+  --fs-hero: clamp(20px, 1.641vw, 31.5px);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-lm-text: var(--lm-text);
+  --color-lm-muted: var(--lm-text-muted);
+  --color-lm-dim: var(--lm-text-dim);
+  --color-lm-soft: var(--lm-text-soft);
+  --color-lm-accent: var(--lm-accent);
+
+  --color-lm-panel: var(--lm-panel-bg);
+  --color-lm-pill: var(--lm-pill-bg);
+  --color-lm-pill-border: var(--lm-pill-border);
+  --color-lm-pill-hover: var(--lm-pill-bg-hover);
+  --color-lm-pill-active: var(--lm-pill-bg-active);
+  --color-lm-card: var(--lm-card-bg);
+  --color-lm-card-border: var(--lm-card-border);
+  --color-lm-field-border: var(--lm-field-border);
+  --color-lm-popover: var(--lm-popover-bg);
+  --color-lm-danger: var(--lm-danger);
+
+  --color-lm-tag-education: var(--lm-tag-education);
+  --color-lm-tag-program: var(--lm-tag-program);
+  --color-lm-tag-social: var(--lm-tag-social);
+  --color-lm-tag-project: var(--lm-tag-project);
+
+  --font-poppins: var(--font-poppins-sans);
+  --font-inter: var(--font-inter-sans);
+  --font-montserrat: var(--font-montserrat-sans);
+
+  --text-nav: var(--fs-nav);
+  --text-header-date: var(--fs-header-date);
+  --text-header-welcome: var(--fs-header-welcome);
+  --text-panel-date: var(--fs-panel-date);
+  --text-card-title: var(--fs-card-title);
+  --text-card-time: var(--fs-card-time);
+  --text-tag: var(--fs-tag);
+  --text-label: var(--fs-label);
+  --text-helper: var(--fs-helper);
+  --text-footer: var(--fs-footer);
+  --text-hero: var(--fs-hero);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* `body` flex kolon olduğu için sabit `height` verilmemeli: aksi halde
+   içerik viewport'tan uzun olduğunda altlık sıfıra sıkışıp içeriğin üstüne
+   biner. `min-height` ile sayfanın uzamasına izin veriyoruz. */
+html {
+  height: 100%;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  min-height: 100%;
+  background-color: var(--lm-bg-top);
+  color: var(--lm-text);
+  font-family: var(--font-inter-sans), system-ui, sans-serif;
 }

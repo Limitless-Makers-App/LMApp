@@ -17,12 +17,25 @@
 /.next/
 /out/
 
+# serwist service worker — `next build` her seferinde yeniden üretir
+/public/sw.js
+/public/swe-worker-*.js
+
 # production
 /build
 
 # misc
 .DS_Store
 *.pem
+
+# firebase service account keys — asla commit edilmemeli
+*service-account*.json
+*serviceaccount*.json
+firebase-adminsdk*.json
+
+# gerçek kişi portresi — repo public, izin alınmadan girmemeli.
+# Uygulamada yerine public/figma/speaker-placeholder.svg kullanılıyor.
+docs/figma-assets/speaker-photo.png
 
 # debug
 npm-debug.log*
