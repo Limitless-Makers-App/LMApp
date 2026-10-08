@@ -96,6 +96,42 @@ npm run start        # Production sunucu
 
 ---
 
+## 🌱 Test Verisi (Seed)
+
+`ekip` ve `ekip-yorumlari` koleksiyonlarını örnek verilerle doldurur; `/ekip/[id]` sayfasını test etmek için gereklidir.
+
+**Tek seferlik kurulum**
+
+1. Firebase Console → Project settings → Service accounts → **Generate new private key**
+2. İndirilen JSON'un tüm içeriğini tek satıra indirin ve `.env.local` içine ekleyin:
+
+   ```
+   FIREBASE_SERVICE_ACCOUNT_KEY='{"type":"service_account","project_id":"...", ...}'
+   ```
+
+   Alternatif olarak dosyayı repo dışında tutup yolunu verin:
+   `FIREBASE_SERVICE_ACCOUNT_PATH=C:\keys\lmapp-service-account.json`
+
+> Bu anahtar bir sırdır — `.env.local` dışında hiçbir yere yazmayın. `.gitignore` service account JSON'larını engeller.
+
+**Çalıştırma**
+
+```bash
+npm run seed -- --uid=<kendi_uid>
+npm run seed -- --uid=<uid_1> --uid=<uid_2> --mentor-uid=<uid_1>   # mentor akışı için
+npm run seed -- --help
+```
+
+- `--uid` zorunlu ve tekrarlanabilir. 3'ten az UID verilirse herkes üç ekibe de üye olur.
+- `--mentor-uid` verilirse o kullanıcının `users/<uid>` dokümanına `role: "mentor"` yazılır — yorum ekleme formunun görünmesi buna bağlıdır.
+- Script **idempotenttir**: `seed-` önekli yorumları silip sabit ID'lerle yeniden yazar. Diğer dokümanlara dokunmaz.
+
+**Üretilen veri**: `ekip-1` Tarım Teknolojileri (Rapor yazıyor), `ekip-2` Fintech 101 (Sunum hazırlığı), `ekip-3` Yaratıcılık 101 (Fikir aşaması) — her birinde 2-3 yorum.
+
+> `ekip-yorumlari` üzerinde `where('ekipId','==',…) + orderBy('zaman','desc')` sorgusu **bileşik indeks** gerektirir. Sayfa ilk açıldığında konsola düşen `FAILED_PRECONDITION` hatasındaki linke tıklayıp indeksi oluşturun.
+
+---
+
 ## 📌 Sıradaki Adımlar (Plan)
 
 1. **Route yapısı**: `(auth)` ve `(dashboard)` route grupları, AuthGuard bileşeni, boş sayfa iskeletleri (login, register, dashboard, team/[id])
