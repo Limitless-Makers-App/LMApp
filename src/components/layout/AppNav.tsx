@@ -82,7 +82,7 @@ export function SecondaryNav() {
   const isActive = useIsActive();
 
   return (
-    <nav className="relative flex w-full min-w-0 shrink-0 flex-wrap items-center gap-[9px] pl-[108.3px]">
+    <nav className="relative flex w-full min-w-0 shrink-0 flex-wrap items-center gap-[9px] pl-[20px] lg:pl-[108.3px]">
       {SECONDARY_LINKS.map((link) => (
         <Pill key={link.href} href={link.href} active={isActive(link.href)}>
           {link.label}

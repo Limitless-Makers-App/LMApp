@@ -22,10 +22,10 @@ export function AppShell({ children, rail }: AppShellProps) {
     <>
       <AppBackdrop />
 
-      <div className="relative mx-auto flex w-full max-w-[1920px] flex-1 flex-col px-[6.43%] pt-[86.7px] pb-[24px]">
+      <div className="relative mx-auto flex w-full max-w-[1920px] flex-1 flex-col px-[16px] pt-[60px] pb-[24px] sm:px-[32px] lg:px-[6.43%] lg:pt-[86.7px]">
         <AppHeader />
 
-        <div className="mt-[23.5px] flex flex-1 items-stretch gap-[22.5px]">
+        <div className="mt-[23.5px] flex flex-1 flex-col items-stretch gap-[22.5px] lg:flex-row">
           <div className="relative flex min-w-0 flex-1 flex-col">
             <img
               src="/figma/container-outline.svg"
@@ -33,19 +33,19 @@ export function AppShell({ children, rail }: AppShellProps) {
               className="pointer-events-none absolute inset-0 h-full w-full max-w-none"
             />
             <PrimaryNav />
-            <main className="relative flex-1 pr-[85.7px] pl-[55.6px] pt-[55.5px] pb-[81.3px]">
+            <main className="relative flex-1 px-[20px] pt-[40px] pb-[60px] sm:px-[40px] lg:pr-[85.7px] lg:pl-[55.6px] lg:pt-[55.5px] lg:pb-[81.3px]">
               {children}
             </main>
           </div>
 
-          <div className="relative flex w-[450px] shrink-0 flex-col">
+          <div className="relative flex w-full shrink-0 flex-col lg:w-[450px]">
             <img
               src="/figma/panel-icon.svg"
               alt=""
               className="pointer-events-none absolute inset-0 h-full w-full max-w-none"
             />
             <SecondaryNav />
-            <div className="relative flex-1 px-[44.2px] pt-[78.6px] pb-[72.3px]">
+            <div className="relative flex-1 px-[20px] pt-[40px] pb-[72.3px] lg:px-[44.2px] lg:pt-[78.6px]">
               {rail}
             </div>
           </div>

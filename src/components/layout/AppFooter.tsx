@@ -13,8 +13,8 @@ const SOCIALS = [
  */
 export function AppFooter() {
   return (
-    <footer className="mt-[36.7px] flex items-center justify-center gap-[18.7px]">
-      <p className="w-[201.6px] text-footer font-inter font-normal text-lm-muted">
+    <footer className="mt-[36.7px] flex flex-wrap items-center justify-center gap-[18.7px]">
+      <p className="w-full max-w-[201.6px] text-footer font-inter font-normal text-lm-muted sm:w-[201.6px]">
         All rights reserved Powered by Limitless Makers
       </p>
 
