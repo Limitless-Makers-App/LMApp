@@ -1,13 +1,11 @@
 import {
   createUserWithEmailAndPassword,
-  GoogleAuthProvider,
   sendPasswordResetEmail,
   signInWithEmailAndPassword,
-  signInWithPopup,
   signOut as firebaseSignOut,
   User,
 } from 'firebase/auth';
-import { doc, setDoc, getDoc, serverTimestamp } from 'firebase/firestore';
+import { doc, setDoc, serverTimestamp } from 'firebase/firestore';
 import { auth, db } from '@/lib/firebaseClient';
 
 export interface AuthUser {
@@ -48,32 +46,6 @@ export async function signUpWithEmail(
   });
 
   return { ...user, displayName };
-}
-
-/**
- * Google ile giriş yapar.
- */
-export async function googleSignIn(): Promise<AuthUser> {
-  const provider = new GoogleAuthProvider();
-  const credential = await signInWithPopup(auth, provider);
-  const user = mapFirebaseUser(credential.user);
-
-  // İlk girişse Firestore'a kaydet
-  const userDoc = doc(db, 'users', user.uid);
-  const snapshot = await getDoc(userDoc);
-  if (!snapshot.exists()) {
-    await setDoc(userDoc, {
-      uid: user.uid,
-      email: user.email,
-      displayName: user.displayName,
-      photoURL: user.photoURL,
-      role: 'user',
-      createdAt: serverTimestamp(),
-      updatedAt: serverTimestamp(),
-    });
-  }
-
-  return user;
 }
 
 /**

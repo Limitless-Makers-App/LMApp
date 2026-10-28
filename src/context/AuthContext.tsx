@@ -14,7 +14,6 @@ import {
   AuthUser,
   signInWithEmail,
   signUpWithEmail,
-  googleSignIn,
   signOut as authSignOut,
   resetPassword,
   mapFirebaseUser,
@@ -33,8 +32,6 @@ export interface AuthContextValue {
   signIn: (email: string, password: string) => Promise<AuthUser>;
   /** Yeni kullanıcı kaydı */
   signUp: (email: string, password: string, displayName: string) => Promise<AuthUser>;
-  /** Google ile giriş */
-  googleSignIn: () => Promise<AuthUser>;
   /** Oturumu kapat */
   signOut: () => Promise<void>;
   /** Şifre sıfırlama e-postası */
@@ -114,15 +111,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     [handleError]
   );
 
-  const googleSignInHandler = useCallback(async () => {
-    setError(null);
-    try {
-      return await googleSignIn();
-    } catch (err) {
-      throw new Error(handleError(err));
-    }
-  }, [handleError]);
-
   const signOutHandler = useCallback(async () => {
     setError(null);
     try {
@@ -152,7 +140,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       error,
       signIn,
       signUp,
-      googleSignIn: googleSignInHandler,
       signOut: signOutHandler,
       resetPassword: resetPasswordHandler,
       clearError,
@@ -164,7 +151,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       error,
       signIn,
       signUp,
-      googleSignInHandler,
       signOutHandler,
       resetPasswordHandler,
       clearError,
