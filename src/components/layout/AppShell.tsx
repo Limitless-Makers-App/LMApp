@@ -4,6 +4,7 @@ import { AppBackdrop } from '@/components/layout/AppBackdrop';
 import { AppFooter } from '@/components/layout/AppFooter';
 import { AppHeader } from '@/components/layout/AppHeader';
 import { PrimaryNav, SecondaryNav } from '@/components/layout/AppNav';
+import { DarEkranPaneli, RailIcerik } from '@/components/layout/PanelRail';
 
 interface AppShellProps {
   children: React.ReactNode;
@@ -36,6 +37,10 @@ export function AppShell({ children, rail }: AppShellProps) {
             <main className="relative flex-1 px-[20px] pt-[40px] pb-[60px] sm:px-[40px] min-[1500px]:pt-[55.5px] min-[1500px]:pb-[81.3px] min-[1500px]:pr-[85.7px] min-[1500px]:pl-[55.6px]">
               {children}
             </main>
+
+            {/* Dar ekranda sağ şerit gizli olduğu için açık panel içeriğin
+                altında gösterilir; panel kapalıyken hiçbir şey render etmez. */}
+            <DarEkranPaneli />
           </div>
 
           {/* Bildirim rayı 1500px altında gizlenir: 1366×768'de sol panel
@@ -48,7 +53,7 @@ export function AppShell({ children, rail }: AppShellProps) {
             />
             <SecondaryNav />
             <div className="relative flex-1 px-[20px] pt-[40px] pb-[72.3px] lg:px-[44.2px] lg:pt-[78.6px]">
-              {rail}
+              <RailIcerik bildirimler={rail} />
             </div>
           </div>
         </div>

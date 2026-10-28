@@ -1,4 +1,7 @@
+'use client';
+
 import Link from 'next/link';
+import { usePanel, type PanelTuru } from '@/components/layout/PanelContext';
 import { cn } from '@/lib/utils';
 
 /**
@@ -23,6 +26,28 @@ export const NAV_INTERACTION_CLASS = [
   'motion-reduce:transition-none motion-reduce:active:scale-100',
 ].join(' ');
 
+/**
+ * Hem bağlantı hapının hem panel hapının paylaştığı sınıf listesi.
+ *
+ * Renk sınıfları iki dala ayrıldı: `border-lm-pill-border` ile
+ * `border-lm-text` (ve metin/zemin karşılıkları) aynı özelliği yazdığı
+ * için birlikte verildiklerinde hangisinin kazandığı CSS sıralamasına
+ * kalırdı. Her durumda yalnızca bir takım üretiliyor.
+ */
+function pillSiniflari(active: boolean): string {
+  return [
+    'inline-flex h-[60px] shrink-0 items-center justify-center whitespace-nowrap',
+    'rounded-[18px] border-[1.5px] px-[21px]',
+    'font-inter text-nav font-medium tracking-[-0.46px]',
+    NAV_INTERACTION_CLASS,
+    active
+      ? // Aktif: beyaz metin + parlak kenarlık + hafif dolgu, 200ms geçiş.
+        'border-lm-text bg-lm-pill-active text-lm-text underline underline-offset-[6px] duration-200'
+      : // Pasif: hover'da zemin bir ton açılır, kenarlık ve metin parlar.
+        'border-lm-pill-border bg-lm-pill text-lm-dim duration-150 hover:border-lm-text hover:bg-lm-pill-hover hover:text-lm-text',
+  ].join(' ');
+}
+
 interface PillProps {
   href: string;
   children: React.ReactNode;
@@ -32,37 +57,59 @@ interface PillProps {
 }
 
 /**
- * Üst menüdeki hap biçimli bağlantı (Program, Proje, Sosyal, Formlar,
- * Duyurular, Görevler). Figma ölçüleri: yükseklik 60px, yarıçap 18px,
- * Inter Medium 23.1px, harf aralığı -0.46px.
+ * Üst menüdeki hap biçimli bağlantı (Program, Proje, Sosyal, Formlar).
+ * Figma ölçüleri: yükseklik 60px, yarıçap 18px, Inter Medium 23.1px,
+ * harf aralığı -0.46px.
  *
  * Genişlik sabit değil: `px-[21px]` + `whitespace-nowrap` ile içeriğe göre
  * büyür, böylece hem zoom'da hem dar pencerede metin kırılmaz. Sığmayan haplar
  * taşmak yerine alt satıra iner (bkz. `PrimaryNav`).
+ *
+ * Route olmayan sekmeler (Galeri, Oturma Düzeni) için aynı görünümü paylaşan
+ * `PanelPill` kullanılır.
  */
 export function Pill({ href, children, active = false, className }: PillProps) {
   return (
     <Link
       href={href}
       aria-current={active ? 'page' : undefined}
-      className={cn(
-        'inline-flex h-[60px] shrink-0 items-center justify-center whitespace-nowrap',
-        'rounded-[18px] border-[1.5px] px-[21px]',
-        'font-inter text-nav font-medium tracking-[-0.46px]',
-        NAV_INTERACTION_CLASS,
-        // Renk sınıfları iki dala ayrıldı: `border-lm-pill-border` ile
-        // `border-lm-text` (ve metin/zemin karşılıkları) aynı özelliği yazdığı
-        // için birlikte verildiklerinde hangisinin kazandığı CSS sıralamasına
-        // kalırdı. Her durumda yalnızca bir takım üretiliyor.
-        active
-          ? // Aktif: beyaz metin + parlak kenarlık + hafif dolgu, 200ms geçiş.
-            'border-lm-text bg-lm-pill-active text-lm-text underline underline-offset-[6px] duration-200'
-          : // Pasif: hover'da zemin bir ton açılır, kenarlık ve metin parlar.
-            'border-lm-pill-border bg-lm-pill text-lm-dim duration-150 hover:border-lm-text hover:bg-lm-pill-hover hover:text-lm-text',
-        className,
-      )}
+      className={cn(pillSiniflari(active), className)}
     >
       {children}
     </Link>
+  );
+}
+
+interface PanelPillProps {
+  panel: PanelTuru;
+  children: React.ReactNode;
+  active: boolean;
+  className?: string;
+}
+
+/**
+ * Sağ panelde bir sekmeyi açan hap (Galeri, Oturma Düzeni).
+ *
+ * Bunlar route değil panel durumudur; bu yüzden `Pill`'den farklı olarak
+ * `next/link` yerine `<button>` çizer ve `aria-current="page"` yerine
+ * `aria-pressed` kullanır. Görünüm `Pill` ile birebir aynıdır.
+ */
+export function PanelPill({
+  panel,
+  children,
+  active,
+  className,
+}: PanelPillProps) {
+  const { panelDegistir } = usePanel();
+
+  return (
+    <button
+      type="button"
+      onClick={() => panelDegistir(panel)}
+      aria-pressed={active}
+      className={cn(pillSiniflari(active), className)}
+    >
+      {children}
+    </button>
   );
 }

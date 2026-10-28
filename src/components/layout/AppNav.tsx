@@ -3,7 +3,8 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Pill, NAV_INTERACTION_CLASS } from '@/components/ui/Pill';
+import { usePanel } from '@/components/layout/PanelContext';
+import { PanelPill, Pill, NAV_INTERACTION_CLASS } from '@/components/ui/Pill';
 import { cn } from '@/lib/utils';
 
 const PRIMARY_LINKS = [
@@ -11,11 +12,6 @@ const PRIMARY_LINKS = [
   { href: '/proje', label: 'Proje' },
   { href: '/sosyal', label: 'Sosyal' },
   { href: '/formlar', label: 'Formlar' },
-];
-
-const SECONDARY_LINKS = [
-  { href: '/duyurular', label: 'Duyurular' },
-  { href: '/gorevler', label: 'Görevler' },
 ];
 
 function useIsActive() {
@@ -32,9 +28,15 @@ function useIsActive() {
  * kadardır, dolayısıyla tasarım genişliğinde görünüm birebir aynı kalır. Buna
  * karşılık `flex-wrap` sayesinde sığmayan haplar taşmak/üst üste binmek yerine
  * alt satıra iner — dar pencerede ve yüksek zoom'da çakışma böyle engellenir.
+ *
+ * Route haplarının ardından Galeri / Oturma Düzeni panel haplarının bir kopyası
+ * gelir. Kopya yalnızca `min-[1500px]` altında görünür: o genişliğin altında
+ * sağ şerit (`SecondaryNav`) gizlendiği için bu sekmeler başka türlü erişilemez
+ * olurdu. Geniş ekranda kopya saklanır, böylece Figma yerleşimi bozulmaz.
  */
 export function PrimaryNav() {
   const isActive = useIsActive();
+  const { aktifPanel } = usePanel();
   const anaSayfaAktif = isActive('/');
 
   return (
@@ -67,27 +69,39 @@ export function PrimaryNav() {
           {link.label}
         </Pill>
       ))}
+
+      <div className="flex flex-wrap items-center gap-[9px] min-[1500px]:hidden">
+        <PanelPill panel="galeri" active={aktifPanel === 'galeri'}>
+          Galeri
+        </PanelPill>
+        <PanelPill panel="oturma-duzeni" active={aktifPanel === 'oturma-duzeni'}>
+          Oturma Düzeni
+        </PanelPill>
+      </div>
     </nav>
   );
 }
 
 /**
- * Sağ panelin üst şeridi: Duyurular / Görevler hapları ve en sağdaki
- * sekme ikonu. Figma: haplar panelin 108.3px'inden başlar, ikon 390.8–449.3
+ * Sağ panelin üst şeridi: Galeri / Oturma Düzeni panel hapları ve en sağdaki
+ * sekme ikonu. Haplar route değil panel durumu olduğu için aktiflik pathname'den
+ * değil `PanelContext`'teki `aktifPanel` değerinden okunur.
+ * Figma: haplar panelin 108.3px'inden başlar, ikon 390.8–449.3
  * aralığındaki çentikte ortalanır.
  *
  * `PrimaryNav` ile aynı taşma koruması: `min-w-0` + `flex-wrap`.
  */
 export function SecondaryNav() {
-  const isActive = useIsActive();
+  const { aktifPanel } = usePanel();
 
   return (
     <nav className="relative flex w-full min-w-0 shrink-0 flex-wrap items-center gap-[9px] pl-[20px] lg:pl-[108.3px]">
-      {SECONDARY_LINKS.map((link) => (
-        <Pill key={link.href} href={link.href} active={isActive(link.href)}>
-          {link.label}
-        </Pill>
-      ))}
+      <PanelPill panel="galeri" active={aktifPanel === 'galeri'}>
+        Galeri
+      </PanelPill>
+      <PanelPill panel="oturma-duzeni" active={aktifPanel === 'oturma-duzeni'}>
+        Oturma Düzeni
+      </PanelPill>
 
       <span className="ml-auto flex w-[58.5px] shrink-0 justify-center">
         <img
