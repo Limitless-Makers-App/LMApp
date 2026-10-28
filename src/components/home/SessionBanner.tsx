@@ -34,8 +34,8 @@ export function SessionBanner({
         backgroundImage: `linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2)), linear-gradient(${color}, ${color})`,
       }}
     >
-      <div className="flex w-[280.5px] shrink-0 flex-col justify-center pb-[36px] pl-[24.9px]">
-        <p className="text-[30.6px] font-inter font-bold leading-none tracking-[-0.31px] text-lm-text">
+      <div className="flex w-[180px] shrink-0 flex-col justify-center pb-[36px] pl-[24.9px] sm:w-[280.5px]">
+        <p className="text-[22px] font-inter font-bold leading-none tracking-[-0.31px] text-lm-text sm:text-[30.6px]">
           {speaker}
         </p>
         <p className="mt-[7.7px] whitespace-pre-line font-poppins text-[10.2px] font-normal leading-[0.967] text-lm-text">
@@ -45,8 +45,10 @@ export function SessionBanner({
 
       <img src="/figma/card-divider.svg" alt="" className="h-full w-[1.5px] shrink-0" />
 
-      <div className="flex flex-1 items-center bg-[#1a1919] px-[37.6px]">
-        <p className="w-[327.8px] text-[17.6px] font-inter font-normal leading-[1.152] tracking-[-0.35px] text-lm-text">
+      {/* Metin `min-w-0` ile daralabilir olmalı: sabit `w-[327.8px]` korunursa
+          dar ekranda başlık bandın dışına taşıyordu. */}
+      <div className="flex min-w-0 flex-1 items-center bg-[#1a1919] px-[16px] sm:px-[37.6px]">
+        <p className="w-full max-w-[327.8px] text-[17.6px] font-inter font-normal leading-[1.152] tracking-[-0.35px] text-lm-text">
           {title}
         </p>
       </div>
