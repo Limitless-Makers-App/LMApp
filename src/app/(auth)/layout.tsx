@@ -1,13 +1,16 @@
 import { AppBackdrop } from '@/components/layout/AppBackdrop';
 import { AppFooter } from '@/components/layout/AppFooter';
-import type { LayoutProps } from '@/types/next';
 
 /**
  * Giriş/kayıt ekranlarının iskeleti.
  * İçerik viewport'un kalanında ortalanır, altlık ise akışın en altında durur —
  * böylece form uzasa bile altlık içeriğin üstüne binmez.
  */
-export default function AuthLayout({ children }: LayoutProps) {
+export default function AuthLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <>
       <AppBackdrop />

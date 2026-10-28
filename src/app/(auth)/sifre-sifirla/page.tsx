@@ -1,21 +1,17 @@
-/* eslint-disable @next/next/no-img-element */
 'use client';
 
-import { useAuth } from '@/hooks/useAuth';
-import { useState } from 'react';
 import Link from 'next/link';
+import { useState } from 'react';
+import { AuthFormCercevesi } from '@/components/auth/AuthFormCercevesi';
+import { AuthLogo } from '@/components/auth/AuthLogo';
+import { FormAlani } from '@/components/auth/FormAlani';
+import { PRIMARY_BUTTON_CLASS } from '@/components/auth/authFormStyles';
+import { useAuth } from '@/hooks/useAuth';
 
 /**
  * Şifre sıfırlama — giriş ekranının görsel dilini kullanır.
  * NOT: Bu ekranın Figma tasarımı yok; login düzeninden türetildi.
  */
-
-const FIELD_CLASS =
-  'h-[56.4px] w-full rounded-[14.4px] border-[1.61px] border-[#e8f6ff] ' +
-  'bg-lm-panel px-[18px] font-inter text-label font-normal text-lm-text ' +
-  'outline-none transition-colors focus:border-lm-accent ' +
-  'placeholder:text-lm-dim';
-
 export default function SifreSifirlaPage() {
   const { resetPassword } = useAuth();
   const [email, setEmail] = useState('');
@@ -41,23 +37,17 @@ export default function SifreSifirlaPage() {
 
   return (
     <div className="flex w-full flex-col items-center">
-      <img src="/figma/logo-mark.svg" alt="" className="w-[191.2px]" />
+      <AuthLogo wordmark={false} />
 
-      <form onSubmit={handleSubmit} className="mt-[92.9px] flex w-[498.2px] flex-col">
-        <label
-          htmlFor="email"
-          className="font-inter text-label font-semibold tracking-[-0.3px] text-lm-text"
-        >
-          *E-posta:
-        </label>
-        <input
+      <AuthFormCercevesi onSubmit={handleSubmit} hata={error}>
+        <FormAlani
           id="email"
+          label="*E-posta:"
           type="email"
           autoComplete="email"
           value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          className={`${FIELD_CLASS} mt-[12.5px]`}
-          required
+          onChange={setEmail}
+          ustBosluk={false}
         />
 
         {sent && (
@@ -66,16 +56,10 @@ export default function SifreSifirlaPage() {
           </p>
         )}
 
-        {error && (
-          <p role="alert" className="mt-[22.2px] font-inter text-helper text-lm-text">
-            {error}
-          </p>
-        )}
-
         <button
           type="submit"
           disabled={loading}
-          className="mt-[40px] h-[56.4px] w-full rounded-[14.4px] border-[1.61px] border-lm-accent bg-lm-accent font-inter text-label font-semibold tracking-[-0.3px] text-lm-text transition-opacity hover:opacity-90 disabled:opacity-50"
+          className={`${PRIMARY_BUTTON_CLASS} mt-[40px]`}
         >
           {loading ? 'Gönderiliyor...' : 'Sıfırlama Bağlantısı Gönder'}
         </button>
@@ -86,7 +70,7 @@ export default function SifreSifirlaPage() {
         >
           Giriş ekranına dön
         </Link>
-      </form>
+      </AuthFormCercevesi>
     </div>
   );
 }
