@@ -1,9 +1,12 @@
-import { AuthGuard } from '@/components/AuthGuard';
-import { NotificationPanel } from '@/components/home/NotificationPanel';
+import { AuthGuard } from '@/components/auth/AuthGuard';
 import { AppShell } from '@/components/layout/AppShell';
-import type { LayoutProps } from '@/types/next';
+import { NotificationPanel } from '@/components/layout/NotificationPanel';
 
-export default function DashboardLayout({ children }: LayoutProps) {
+export default function DashboardLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <AuthGuard>
       <AppShell rail={<NotificationPanel />}>{children}</AppShell>

@@ -1,39 +1,33 @@
-/* eslint-disable @next/next/no-img-element */
 'use client';
 
-import { useAuth } from '@/hooks/useAuth';
-import {
-  ERROR_CLASS,
-  FIELD_CLASS,
-  LABEL_CLASS,
-  PRIMARY_BUTTON_CLASS,
-  SECONDARY_BUTTON_CLASS,
-} from '@/components/auth/authFormStyles';
-import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+import { AuthAltBaglanti } from '@/components/auth/AuthAltBaglanti';
+import { AuthAyirici } from '@/components/auth/AuthAyirici';
+import { AuthFormCercevesi } from '@/components/auth/AuthFormCercevesi';
+import { AuthLogo } from '@/components/auth/AuthLogo';
+import { FormAlani } from '@/components/auth/FormAlani';
+import { GoogleButonu } from '@/components/auth/GoogleButonu';
+import { SifreAlani } from '@/components/auth/SifreAlani';
+import { PRIMARY_BUTTON_CLASS } from '@/components/auth/authFormStyles';
+import { useAuthYonlendirme } from '@/components/auth/useAuthYonlendirme';
+import { useAuth } from '@/hooks/useAuth';
 
 /**
  * Giriş ekranı — Figma "LM App PC log in" (239:818), 1920×1080 referans.
  * Ölçüler Figma değerlerinin 0.3 katsayısıyla CSS px'e çevrilmiş halidir;
- * stiller kayıt ekranıyla ortak olarak `authFormStyles` üzerinden gelir.
+ * ortak parçalar `components/auth/` altından gelir.
  */
-
 export default function LoginPage() {
-  const { signIn, googleSignIn, user } = useAuth();
+  const { signIn, googleSignIn } = useAuth();
   const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
-  // Zaten giriş yapmışsa ana sayfaya yönlendir
-  useEffect(() => {
-    if (user) {
-      router.push('/');
-    }
-  }, [user, router]);
+  useAuthYonlendirme();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -43,11 +37,11 @@ export default function LoginPage() {
       await signIn(email, password);
       router.push('/');
     } catch (err: unknown) {
-      const message =
+      setError(
         err instanceof Error
           ? err.message
-          : 'Giriş başarısız. Lütfen bilgilerinizi kontrol edin.';
-      setError(message);
+          : 'Giriş başarısız. Lütfen bilgilerinizi kontrol edin.',
+      );
     } finally {
       setLoading(false);
     }
@@ -60,9 +54,7 @@ export default function LoginPage() {
       await googleSignIn();
       router.push('/');
     } catch (err: unknown) {
-      const message =
-        err instanceof Error ? err.message : 'Google ile giriş başarısız.';
-      setError(message);
+      setError(err instanceof Error ? err.message : 'Google ile giriş başarısız.');
     } finally {
       setLoading(false);
     }
@@ -70,61 +62,26 @@ export default function LoginPage() {
 
   return (
     <div className="flex w-full flex-col items-center">
-      <div className="flex flex-col items-center">
-        <img src="/figma/logo-mark.svg" alt="" className="w-[191.2px]" />
-        <img
-          src="/figma/logo-wordmark.svg"
-          alt="Limitless Makers"
-          className="mt-[11.3px] w-[195.6px]"
-        />
-      </div>
+      <AuthLogo />
 
-      <form onSubmit={handleSubmit} className="mt-[92.9px] flex w-[498.2px] flex-col">
-        {error && (
-          <p role="alert" className={`${ERROR_CLASS} mb-[19px]`}>
-            {error}
-          </p>
-        )}
-
-        <label htmlFor="email" className={LABEL_CLASS}>
-          *E-posta:
-        </label>
-        <input
+      <AuthFormCercevesi onSubmit={handleSubmit} hata={error}>
+        <FormAlani
           id="email"
+          label="*E-posta:"
           type="email"
           autoComplete="email"
           value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          className={`${FIELD_CLASS} mt-[12.5px]`}
-          required
+          onChange={setEmail}
+          ustBosluk={false}
         />
 
-        <label htmlFor="password" className={`${LABEL_CLASS} mt-[42.5px]`}>
-          *Şifre:
-        </label>
-        <div className="relative mt-[12.5px]">
-          <input
-            id="password"
-            type={showPassword ? 'text' : 'password'}
-            autoComplete="current-password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className={`${FIELD_CLASS} pr-[60px]`}
-            required
-          />
-          <button
-            type="button"
-            onClick={() => setShowPassword((value) => !value)}
-            aria-label={showPassword ? 'Şifreyi gizle' : 'Şifreyi göster'}
-            className="absolute top-1/2 right-[15px] -translate-y-1/2 opacity-70 transition-opacity hover:opacity-100"
-          >
-            <img
-              src={showPassword ? '/figma/eye.svg' : '/figma/eye-off.svg'}
-              alt=""
-              className="w-[24.3px]"
-            />
-          </button>
-        </div>
+        <SifreAlani
+          id="password"
+          label="*Şifre:"
+          autoComplete="current-password"
+          value={password}
+          onChange={setPassword}
+        />
 
         <Link
           href="/sifre-sifirla"
@@ -141,28 +98,16 @@ export default function LoginPage() {
           {loading ? 'Giriş yapılıyor...' : 'Giriş Yap'}
         </button>
 
-        <div className="my-[24px] flex items-center gap-[14px]">
-          <span className="h-px flex-1 bg-lm-card-border" />
-          <span className="font-inter text-helper text-lm-dim">veya</span>
-          <span className="h-px flex-1 bg-lm-card-border" />
-        </div>
+        <AuthAyirici />
 
-        <button
-          type="button"
-          onClick={handleGoogleSignIn}
-          disabled={loading}
-          className={SECONDARY_BUTTON_CLASS}
-        >
-          Google ile devam et
-        </button>
+        <GoogleButonu onClick={handleGoogleSignIn} disabled={loading} />
 
-        <p className="mt-[22.2px] text-center font-inter text-helper text-lm-muted">
-          Hesabın yok mu?{' '}
-          <Link href="/register" className="font-medium text-lm-accent hover:underline">
-            Kayıt Ol
-          </Link>
-        </p>
-      </form>
+        <AuthAltBaglanti
+          metin="Hesabın yok mu?"
+          baglantiMetni="Kayıt Ol"
+          href="/register"
+        />
+      </AuthFormCercevesi>
     </div>
   );
 }

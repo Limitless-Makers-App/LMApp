@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 
 import { Tag } from '@/components/ui/Tag';
-import { NOTIFICATIONS } from '@/components/home/notifications';
+import { NOTIFICATIONS } from './notifications';
 
 /**
  * Sağ paneldeki bildirim akışı. Figma'da liste 361.5px genişliğinde,

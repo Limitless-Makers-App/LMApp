@@ -8,8 +8,8 @@ import {
   useState,
 } from 'react';
 import { onAuthStateChanged, User } from 'firebase/auth';
-import { doc, getDoc } from 'firebase/firestore';
-import { auth, db } from '@/lib/firebaseClient';
+import { auth } from '@/lib/firebaseClient';
+import { kullaniciRoluGetir } from '@/services/userService';
 import {
   AuthUser,
   signInWithEmail,
@@ -62,9 +62,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
         // Firestore'dan kullanıcı rolünü çek
         try {
-          const userDoc = await getDoc(doc(db, 'users', mapped.uid));
-          if (userDoc.exists()) {
-            setRole(userDoc.data().role ?? 'user');
+          const kullaniciRolu = await kullaniciRoluGetir(mapped.uid);
+          if (kullaniciRolu !== null) {
+            setRole(kullaniciRolu);
           }
         } catch {
           // Rol çekilemezse sessizce devam et
