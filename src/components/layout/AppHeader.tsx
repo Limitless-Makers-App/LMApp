@@ -29,18 +29,22 @@ export function AppHeader() {
   const name = user?.displayName || user?.email?.split('@')[0] || '';
 
   return (
-    <header className="flex items-center justify-between">
-      <div className="flex items-start">
-        <img src="/figma/logo-mark.svg" alt="" className="mt-[2px] w-[112.8px]" />
+    <header className="flex flex-wrap items-center justify-between gap-x-[13.3px] gap-y-[10px]">
+      <div className="flex shrink-0 items-start">
+        <img
+          src="/figma/logo-mark.svg"
+          alt=""
+          className="mt-[2px] w-[80px] sm:w-[112.8px]"
+        />
         <img
           src="/figma/logo-wordmark.svg"
           alt="Limitless Makers"
-          className="ml-[6.9px] w-[114.7px]"
+          className="ml-[6.9px] w-[81px] sm:w-[114.7px]"
         />
       </div>
 
-      <div className="flex items-center gap-[13.3px]">
-        <div className="text-right">
+      <div className="flex min-w-0 items-center gap-[13.3px]">
+        <div className="min-w-0 text-right">
           <p className="text-header-date font-inter font-normal text-lm-text">
             {today}
           </p>
