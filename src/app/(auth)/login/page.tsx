@@ -4,11 +4,9 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { AuthAltBaglanti } from '@/components/auth/AuthAltBaglanti';
-import { AuthAyirici } from '@/components/auth/AuthAyirici';
 import { AuthFormCercevesi } from '@/components/auth/AuthFormCercevesi';
 import { AuthLogo } from '@/components/auth/AuthLogo';
 import { FormAlani } from '@/components/auth/FormAlani';
-import { GoogleButonu } from '@/components/auth/GoogleButonu';
 import { SifreAlani } from '@/components/auth/SifreAlani';
 import { PRIMARY_BUTTON_CLASS } from '@/components/auth/authFormStyles';
 import { useAuthYonlendirme } from '@/components/auth/useAuthYonlendirme';
@@ -20,7 +18,7 @@ import { useAuth } from '@/hooks/useAuth';
  * ortak parçalar `components/auth/` altından gelir.
  */
 export default function LoginPage() {
-  const { signIn, googleSignIn } = useAuth();
+  const { signIn } = useAuth();
   const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -42,19 +40,6 @@ export default function LoginPage() {
           ? err.message
           : 'Giriş başarısız. Lütfen bilgilerinizi kontrol edin.',
       );
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleGoogleSignIn = async () => {
-    setError('');
-    setLoading(true);
-    try {
-      await googleSignIn();
-      router.push('/');
-    } catch (err: unknown) {
-      setError(err instanceof Error ? err.message : 'Google ile giriş başarısız.');
     } finally {
       setLoading(false);
     }
@@ -97,10 +82,6 @@ export default function LoginPage() {
         >
           {loading ? 'Giriş yapılıyor...' : 'Giriş Yap'}
         </button>
-
-        <AuthAyirici />
-
-        <GoogleButonu onClick={handleGoogleSignIn} disabled={loading} />
 
         <AuthAltBaglanti
           metin="Hesabın yok mu?"

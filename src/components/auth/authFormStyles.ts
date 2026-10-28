@@ -23,12 +23,6 @@ export const PRIMARY_BUTTON_CLASS =
   'bg-lm-accent font-inter text-label font-semibold tracking-[-0.3px] text-lm-text ' +
   'transition-opacity hover:opacity-90 disabled:opacity-50';
 
-/** İkincil eylem butonu (Google ile devam et). */
-export const SECONDARY_BUTTON_CLASS =
-  'h-[56.4px] w-full rounded-[14.4px] border-[1.61px] border-lm-pill-border ' +
-  'bg-lm-pill font-inter text-label font-medium text-lm-text ' +
-  'transition-opacity hover:opacity-90 disabled:opacity-50';
-
 /** Hata bildirimi — panel zemininde ince renkli kontur. */
 export const ERROR_CLASS =
   'rounded-[14.4px] border-[1.61px] border-lm-tag-education bg-lm-panel ' +
