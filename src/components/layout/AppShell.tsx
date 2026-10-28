@@ -25,7 +25,7 @@ export function AppShell({ children, rail }: AppShellProps) {
       <div className="relative mx-auto flex w-full max-w-[1920px] flex-1 flex-col px-[16px] pt-[60px] pb-[24px] sm:px-[32px] lg:px-[6.43%] lg:pt-[86.7px]">
         <AppHeader />
 
-        <div className="mt-[23.5px] flex flex-1 flex-col items-stretch gap-[22.5px] lg:flex-row">
+        <div className="mt-[23.5px] flex flex-1 flex-col items-stretch gap-[22.5px] min-[1500px]:flex-row">
           <div className="relative flex min-w-0 flex-1 flex-col">
             <img
               src="/figma/container-outline.svg"
@@ -33,12 +33,14 @@ export function AppShell({ children, rail }: AppShellProps) {
               className="pointer-events-none absolute inset-0 h-full w-full max-w-none"
             />
             <PrimaryNav />
-            <main className="relative flex-1 px-[20px] pt-[40px] pb-[60px] sm:px-[40px] lg:pr-[85.7px] lg:pl-[55.6px] lg:pt-[55.5px] lg:pb-[81.3px]">
+            <main className="relative flex-1 px-[20px] pt-[40px] pb-[60px] sm:px-[40px] min-[1500px]:pt-[55.5px] min-[1500px]:pb-[81.3px] min-[1500px]:pr-[85.7px] min-[1500px]:pl-[55.6px]">
               {children}
             </main>
           </div>
 
-          <div className="relative flex w-full shrink-0 flex-col lg:w-[450px]">
+          {/* Bildirim rayı 1500px altında gizlenir: 1366×768'de sol panel
+              kullanılabilir genişlik bırakmıyordu. */}
+          <div className="relative hidden w-full shrink-0 flex-col min-[1500px]:flex min-[1500px]:w-[450px]">
             <img
               src="/figma/panel-icon.svg"
               alt=""

@@ -1,10 +1,10 @@
 /* eslint-disable @next/next/no-img-element */
 
 const SOCIALS = [
-  { src: '/figma/social-1.svg', label: 'Instagram' },
-  { src: '/figma/social-2.svg', label: 'LinkedIn' },
-  { src: '/figma/social-3.svg', label: 'YouTube' },
-  { src: '/figma/social-4.svg', label: 'X' },
+  { src: '/figma/social-1.svg', label: 'Instagram', href: 'https://www.instagram.com/limitlessmakers/' },
+  { src: '/figma/social-2.svg', label: 'LinkedIn', href: 'https://www.linkedin.com/company/limitless-makers/' },
+  { src: '/figma/social-3.svg', label: 'YouTube', href: null },
+  { src: '/figma/social-4.svg', label: 'X', href: 'https://x.com/limitlessmakers' },
 ];
 
 /**
@@ -19,17 +19,32 @@ export function AppFooter() {
       </p>
 
       <ul className="flex items-center gap-[9.4px]">
-        {SOCIALS.map((social) => (
-          <li key={social.src}>
-            <a
-              href="#"
-              aria-label={social.label}
-              className="block transition-opacity hover:opacity-70"
-            >
-              <img src={social.src} alt="" className="w-[30.34px]" />
-            </a>
-          </li>
-        ))}
+        {SOCIALS.map((social) =>
+          // Adresi henüz bilinmeyen ikonlar `#` yerine hiç bağlantı olarak
+          // render edilmez — ölü `#` linki klavyeyle gezinirken boşa duruyordu.
+          social.href ? (
+            <li key={social.src}>
+              <a
+                href={social.href}
+                aria-label={social.label}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block transition-opacity hover:opacity-70"
+              >
+                <img src={social.src} alt="" className="w-[30.34px]" />
+              </a>
+            </li>
+          ) : (
+            <li key={social.src} aria-hidden="true">
+              <img
+                src={social.src}
+                alt=""
+                title={`${social.label} — adres henüz tanımlı değil`}
+                className="w-[30.34px] opacity-50"
+              />
+            </li>
+          ),
+        )}
       </ul>
     </footer>
   );

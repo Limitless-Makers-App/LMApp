@@ -43,6 +43,9 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
+# Claude Code — kişisel/yerel ayarlar paylaşılmaz (canlı token içerebilir)
+.claude/settings.local.json
+
 # env files (can opt-in for committing if needed)
 .env
 .env.local
