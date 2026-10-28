@@ -26,7 +26,7 @@ export function NotificationPanel() {
                 >
                   <Tag tone={item.tone}>{item.tag}</Tag>
 
-                  <p className="mt-[7.8px] w-[321.9px] text-card-title font-poppins font-normal leading-[1.145] text-lm-text">
+                  <p className="mt-[7.8px] w-full max-w-[321.9px] text-card-title font-poppins font-normal leading-[1.145] text-lm-text">
                     {item.title}
                   </p>
 

@@ -34,13 +34,13 @@ export default function HomePage() {
         title={FEATURED_SESSION.title}
       />
 
-      <div className="mt-[25.4px] flex items-start">
+      <div className="mt-[25.4px] flex flex-wrap items-start gap-y-[24px]">
         <SpeakerPoster
           name={SPEAKER_POSTER.name}
           field={SPEAKER_POSTER.field}
         />
 
-        <div className="ml-[49.5px]">
+        <div className="ml-0 lg:ml-[49.5px]">
           <SpeakerBio
             name={SPEAKER_BIO.name}
             field={SPEAKER_BIO.field}
@@ -48,7 +48,7 @@ export default function HomePage() {
           />
         </div>
 
-        <div className="ml-[54px] flex w-[415.2px] shrink-0 flex-col">
+        <div className="mt-[24px] flex w-full min-w-0 shrink-0 flex-col lg:mt-0 lg:ml-[54px] lg:w-[415.2px]">
           <span className="text-label font-inter font-semibold text-lm-text">
             {RED_SESSION.time}
           </span>

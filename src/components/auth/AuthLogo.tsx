@@ -7,12 +7,12 @@
 export function AuthLogo({ wordmark = true }: { wordmark?: boolean }) {
   return (
     <div className="flex flex-col items-center">
-      <img src="/figma/logo-mark.svg" alt="" className="w-[191.2px]" />
+      <img src="/figma/logo-mark.svg" alt="" className="w-[140px] sm:w-[191.2px]" />
       {wordmark && (
         <img
           src="/figma/logo-wordmark.svg"
           alt="Limitless Makers"
-          className="mt-[11.3px] w-[195.6px]"
+          className="mt-[11.3px] w-[143px] sm:w-[195.6px]"
         />
       )}
     </div>
